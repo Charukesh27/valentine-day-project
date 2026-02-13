@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhavani ❤️ Under The Same Sky</title>
+
+<style>
+
+/* ===============================
+   RESET
+================================ */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:radial-gradient(circle at top,#1a1a2e,#0f0f1a,#000);
+color:white;
+overflow-x:hidden;
+}
+
+/* ===============================
+   STARS BACKGROUND
+================================ */
+#stars{
+position:fixed;
+inset:0;
+z-index:-1;
+}
+
+/* ===============================
+   MOON GLOW
+================================ */
+.moon{
+position:fixed;
+top:80px;
+right:40px;
+width:120px;
+height:120px;
+background:radial-gradient(circle,#fff,#ddd,#aaa);
+border-radius:50%;
+box-shadow:0 0 80px 30px rgba(255,255,255,0.3);
+opacity:0.8;
+}
+
+/* ===============================
+   SCROLL PROGRESS
+================================ */
+#progressBar{
+position:fixed;
+top:0;
+left:0;
+height:4px;
+background:linear-gradient(90deg,#ff4e50,#ff9a9e);
+width:0%;
+z-index:2000;
+}
+
+/* ===============================
+   NAVBAR
+================================ */
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 20px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+z-index:1000;
+}
+
+nav h1{
+font-size:18px;
+letter-spacing:1px;
+text-shadow:0 0 10px #ff9a9e;
+}
+
+nav ul{
+display:flex;
+gap:15px;
+list-style:none;
+font-size:12px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+opacity:0.8;
+transition:0.3s;
+}
+
+nav a:hover{
+opacity:1;
+text-shadow:0 0 10px pink;
+}
+
+/* ===============================
+   SECTIONS
+================================ */
+section{
+min-height:100vh;
+padding:110px 25px 60px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+opacity:0;
+transform:translateY(40px);
+transition:1.2s ease;
+}
+
+section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+h2{
+font-size:28px;
+margin-bottom:20px;
+text-shadow:0 0 20px rgba(255,150,200,0.8);
+}
+
+p{
+max-width:520px;
+line-height:1.8;
+font-size:15px;
+opacity:0.95;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.btn{
+margin-top:30px;
+padding:15px 35px;
+border:none;
+border-radius:50px;
+background:linear-gradient(45deg,#ff4e50,#fc913a);
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.4s ease;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+.btn:hover{
+transform:translateY(-6px) scale(1.08);
+box-shadow:0 20px 50px rgba(0,0,0,0.9);
+}
+
+/* ===============================
+   MODAL
+================================ */
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:3000;
+}
+
+.modal-content{
+background:rgba(255,255,255,0.08);
+padding:40px 25px;
+border-radius:25px;
+backdrop-filter:blur(20px);
+animation:popUp 0.5s ease;
+}
+
+@keyframes popUp{
+0%{transform:scale(0.6);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+/* ===============================
+   SECRET LETTER
+================================ */
+#secret{
+margin-top:40px;
+padding:20px;
+border-radius:20px;
+background:rgba(255,255,255,0.05);
+display:none;
+backdrop-filter:blur(15px);
+}
+
+/* ===============================
+   ROSE PETALS
+================================ */
+.petal{
+position:fixed;
+top:-10px;
+font-size:18px;
+animation:fall linear infinite;
+opacity:0.7;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10px) rotate(0deg);}
+100%{transform:translateY(100vh) rotate(360deg);}
+}
+
+/* ===============================
+   CANVAS
+================================ */
+canvas{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-2;
+}
+
+@media(min-width:768px){
+h2{font-size:34px;}
+p{font-size:17px;}
+nav ul{font-size:14px;}
+}
+
+</style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+<canvas id="stars"></canvas>
+<div class="moon"></div>
+
+<nav>
+<h1>Bhavani 🌙</h1>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#promise">Promise</a></li>
+<li><a href="#proposal">Proposal</a></li>
+<li><a href="#forever">Forever</a></li>
+</ul>
+</nav>
+
+<section id="home">
+<h2>Under The Same Sky 💫</h2>
+<p id="typing"></p>
+</section>
+
+<section id="promise">
+<h2>The Day of Promises – 11 February 2026</h2>
+<p>
+Bhavani, I promise I will stand with you,<br>
+Even if the whole world is against you,<br>
+You don’t worry about anything,<br>
+I will always be there for you, my dear.
+</p>
+</section>
+
+<section id="proposal">
+<h2>My Proposal 💍</h2>
+<p>
+Loving you is not about holding you.  
+It is about standing beside you.  
+Respecting you. Choosing you. Every day.
+</p>
+<button class="btn" onclick="openModal()">Will You Accept My Love?</button>
+</section>
+
+<section id="forever">
+<h2>Forever ❤️</h2>
+<p>
+Bhavani, you are not just my love…  
+You are my peace, my strength, my forever.
+</p>
+<button class="btn" onclick="revealSecret()">Unlock Secret Letter 🔐</button>
+
+<div id="secret">
+<p>
+Even if someday your answer is silence,  
+I will still pray for your happiness.  
+My love is patient. My love is respectful.  
+My love is forever yours.
+</p>
+</div>
+
+</section>
+
+<div class="modal" id="proposalModal">
+<div class="modal-content">
+<h2>Bhavani, Will You Accept My Love?</h2>
+<button class="btn" onclick="acceptLove()">YES 💖</button>
+<button class="btn" onclick="needTime()">I Need Time ⏳</button>
+<p id="response" style="margin-top:20px;"></p>
+</div>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+
+/* Scroll progress */
+window.addEventListener("scroll",()=>{
+let scrollTop=document.documentElement.scrollTop;
+let scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+document.getElementById("progressBar").style.width=(scrollTop/scrollHeight)*100+"%";
+});
+
+/* Stars animation */
+const starCanvas=document.getElementById("stars");
+const starCtx=starCanvas.getContext("2d");
+starCanvas.width=window.innerWidth;
+starCanvas.height=window.innerHeight;
+
+let stars=[];
+for(let i=0;i<200;i++){
+stars.push({
+x:Math.random()*starCanvas.width,
+y:Math.random()*starCanvas.height,
+radius:Math.random()*1.5
+});
+}
+
+function drawStars(){
+starCtx.clearRect(0,0,starCanvas.width,starCanvas.height);
+stars.forEach(s=>{
+starCtx.beginPath();
+starCtx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+starCtx.fillStyle="white";
+starCtx.fill();
+});
+requestAnimationFrame(drawStars);
+}
+drawStars();
+
+/* Rose petals */
+for(let i=0;i<25;i++){
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌹";
+petal.style.left=Math.random()*100+"%";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(petal);
+}
+
+/* Typing */
+const text="Bhavani, even under the darkest sky, my respect and love for you shine brighter than the stars.";
+let i=0;
+function typing(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,50);
+}
+}
+typing();
+
+/* Scroll reveal */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+if(sec.getBoundingClientRect().top<window.innerHeight-100){
+sec.classList.add("show");
+}
+});
+});
+
+/* Modal */
+function openModal(){
+document.getElementById("proposalModal").style.display="flex";
+}
+function acceptLove(){
+document.getElementById("response").innerText="You Made Me The Happiest Person Alive!";
+startFireworks();
+}
+function needTime(){
+document.getElementById("response").innerText="I will wait. My love will never change.";
+}
+
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function startFireworks(){
+for(let i=0;i<200;i++){
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height;
+ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+ctx.beginPath();
+ctx.arc(x,y,3,0,Math.PI*2);
+ctx.fill();
+}
+}
+
+/* Secret */
+function revealSecret(){
+document.getElementById("secret").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
