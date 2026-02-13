@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bhavani 🌙 Moonlight Promise</title>
+<title>Bhavani ❤️ Under The Same Sky</title>
 
 <style>
 
 /* ===============================
-   GLOBAL RESET
+   RESET
 ================================ */
 *{
 margin:0;
@@ -19,39 +19,46 @@ font-family:'Segoe UI',sans-serif;
 }
 
 body{
-background:radial-gradient(circle at top,#0a0f2c,#050816,#000);
+background:radial-gradient(circle at top,#1a1a2e,#0f0f1a,#000);
 color:white;
 overflow-x:hidden;
 }
 
 /* ===============================
-   NIGHT SKY CANVAS
+   STARS BACKGROUND
 ================================ */
-#sky{
+#stars{
 position:fixed;
 inset:0;
-z-index:-2;
-}
-
-/* ===============================
-   MOON
-================================ */
-.moon{
-position:fixed;
-top:90px;
-right:60px;
-width:140px;
-height:140px;
-background:radial-gradient(circle,#ffffff,#e0e0e0,#bdbdbd);
-border-radius:50%;
-box-shadow:0 0 100px 40px rgba(255,255,255,0.3);
-animation:moonGlow 4s ease-in-out infinite alternate;
 z-index:-1;
 }
 
-@keyframes moonGlow{
-from{box-shadow:0 0 80px 30px rgba(255,255,255,0.3);}
-to{box-shadow:0 0 120px 50px rgba(255,255,255,0.6);}
+/* ===============================
+   MOON GLOW
+================================ */
+.moon{
+position:fixed;
+top:80px;
+right:40px;
+width:120px;
+height:120px;
+background:radial-gradient(circle,#fff,#ddd,#aaa);
+border-radius:50%;
+box-shadow:0 0 80px 30px rgba(255,255,255,0.3);
+opacity:0.8;
+}
+
+/* ===============================
+   SCROLL PROGRESS
+================================ */
+#progressBar{
+position:fixed;
+top:0;
+left:0;
+height:4px;
+background:linear-gradient(90deg,#ff4e50,#ff9a9e);
+width:0%;
+z-index:2000;
 }
 
 /* ===============================
@@ -66,14 +73,14 @@ justify-content:space-between;
 align-items:center;
 padding:15px 20px;
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
+backdrop-filter:blur(15px);
 z-index:1000;
 }
 
 nav h1{
 font-size:18px;
 letter-spacing:1px;
-text-shadow:0 0 15px #ff9ad5;
+text-shadow:0 0 10px #ff9a9e;
 }
 
 nav ul{
@@ -92,7 +99,7 @@ transition:0.3s;
 
 nav a:hover{
 opacity:1;
-text-shadow:0 0 10px #ff80bf;
+text-shadow:0 0 10px pink;
 }
 
 /* ===============================
@@ -117,30 +124,16 @@ transform:translateY(0);
 }
 
 h2{
-font-size:30px;
+font-size:28px;
 margin-bottom:20px;
-background:linear-gradient(45deg,#ff7eb3,#ffd3e0);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-shadow:0 0 20px rgba(255,150,200,0.6);
+text-shadow:0 0 20px rgba(255,150,200,0.8);
 }
 
 p{
-max-width:550px;
-line-height:1.9;
+max-width:520px;
+line-height:1.8;
 font-size:15px;
 opacity:0.95;
-}
-
-/* ===============================
-   GLASS CARD
-================================ */
-.glass{
-background:rgba(255,255,255,0.07);
-padding:25px;
-border-radius:25px;
-backdrop-filter:blur(20px);
-box-shadow:0 10px 40px rgba(0,0,0,0.6);
 }
 
 /* ===============================
@@ -151,7 +144,7 @@ margin-top:30px;
 padding:15px 35px;
 border:none;
 border-radius:50px;
-background:linear-gradient(45deg,#ff4e50,#ff80bf);
+background:linear-gradient(45deg,#ff4e50,#fc913a);
 color:white;
 font-size:15px;
 cursor:pointer;
@@ -161,7 +154,7 @@ box-shadow:0 10px 30px rgba(0,0,0,0.6);
 
 .btn:hover{
 transform:translateY(-6px) scale(1.08);
-box-shadow:0 20px 50px rgba(255,105,180,0.6);
+box-shadow:0 20px 50px rgba(0,0,0,0.9);
 }
 
 /* ===============================
@@ -182,9 +175,8 @@ z-index:3000;
 background:rgba(255,255,255,0.08);
 padding:40px 25px;
 border-radius:25px;
-backdrop-filter:blur(25px);
+backdrop-filter:blur(20px);
 animation:popUp 0.5s ease;
-text-align:center;
 }
 
 @keyframes popUp{
@@ -205,10 +197,33 @@ backdrop-filter:blur(15px);
 }
 
 /* ===============================
-   RESPONSIVE
+   ROSE PETALS
 ================================ */
+.petal{
+position:fixed;
+top:-10px;
+font-size:18px;
+animation:fall linear infinite;
+opacity:0.7;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10px) rotate(0deg);}
+100%{transform:translateY(100vh) rotate(360deg);}
+}
+
+/* ===============================
+   CANVAS
+================================ */
+canvas{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:-2;
+}
+
 @media(min-width:768px){
-h2{font-size:36px;}
+h2{font-size:34px;}
 p{font-size:17px;}
 nav ul{font-size:14px;}
 }
@@ -217,7 +232,8 @@ nav ul{font-size:14px;}
 </head>
 <body>
 
-<canvas id="sky"></canvas>
+<div id="progressBar"></div>
+<canvas id="stars"></canvas>
 <div class="moon"></div>
 
 <nav>
@@ -231,62 +247,47 @@ nav ul{font-size:14px;}
 </nav>
 
 <section id="home">
-<h2>Under The Same Moonlight 💫</h2>
-<div class="glass">
+<h2>Under The Same Sky 💫</h2>
 <p id="typing"></p>
-</div>
 </section>
 
 <section id="promise">
 <h2>The Day of Promises – 11 February 2026</h2>
-<div class="glass">
 <p>
 Bhavani, I promise I will stand with you,<br>
 Even if the whole world is against you,<br>
 You don’t worry about anything,<br>
 I will always be there for you, my dear.
 </p>
-</div>
 </section>
 
 <section id="proposal">
 <h2>My Proposal 💍</h2>
-<div class="glass">
 <p>
-You are not someone I want to control —  
-You are someone I want to understand.  
-Not someone I want to possess —  
-But someone I want to protect and respect.  
-<br><br>
-If love means choosing one soul in a world full of billions…  
-Bhavani, I choose you.
+Loving you is not about holding you.  
+It is about standing beside you.  
+Respecting you. Choosing you. Every day.
 </p>
 <button class="btn" onclick="openModal()">Will You Accept My Love?</button>
-</div>
 </section>
 
 <section id="forever">
 <h2>Forever ❤️</h2>
-<div class="glass">
 <p>
-You are my calm after chaos.  
-My strength when I feel weak.  
-My silent prayer.  
-My forever decision.
+Bhavani, you are not just my love…  
+You are my peace, my strength, my forever.
 </p>
-<button class="btn" onclick="revealSecret()">Unlock My Heart 🔐</button>
+<button class="btn" onclick="revealSecret()">Unlock Secret Letter 🔐</button>
 
 <div id="secret">
 <p>
-Even if one day your answer is “no,”  
-My respect for you will never change.  
-Even if time separates us,  
-My prayers for your happiness will remain.  
-Because loving you is not about owning you —  
-It is about honoring you.
+Even if someday your answer is silence,  
+I will still pray for your happiness.  
+My love is patient. My love is respectful.  
+My love is forever yours.
 </p>
 </div>
-</div>
+
 </section>
 
 <div class="modal" id="proposalModal">
@@ -298,45 +299,56 @@ It is about honoring you.
 </div>
 </div>
 
+<canvas id="fireworks"></canvas>
+
 <script>
 
-/* ===============================
-   STARS ANIMATION
-================================ */
-const sky=document.getElementById("sky");
-const ctx=sky.getContext("2d");
-sky.width=window.innerWidth;
-sky.height=window.innerHeight;
+/* Scroll progress */
+window.addEventListener("scroll",()=>{
+let scrollTop=document.documentElement.scrollTop;
+let scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+document.getElementById("progressBar").style.width=(scrollTop/scrollHeight)*100+"%";
+});
+
+/* Stars animation */
+const starCanvas=document.getElementById("stars");
+const starCtx=starCanvas.getContext("2d");
+starCanvas.width=window.innerWidth;
+starCanvas.height=window.innerHeight;
 
 let stars=[];
-for(let i=0;i<250;i++){
+for(let i=0;i<200;i++){
 stars.push({
-x:Math.random()*sky.width,
-y:Math.random()*sky.height,
-radius:Math.random()*1.5,
-alpha:Math.random()
+x:Math.random()*starCanvas.width,
+y:Math.random()*starCanvas.height,
+radius:Math.random()*1.5
 });
 }
 
 function drawStars(){
-ctx.clearRect(0,0,sky.width,sky.height);
+starCtx.clearRect(0,0,starCanvas.width,starCanvas.height);
 stars.forEach(s=>{
-ctx.beginPath();
-ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
-ctx.fillStyle="rgba(255,255,255,"+s.alpha+")";
-ctx.fill();
-s.alpha+= (Math.random()-0.5)*0.05;
-if(s.alpha<0) s.alpha=0;
-if(s.alpha>1) s.alpha=1;
+starCtx.beginPath();
+starCtx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+starCtx.fillStyle="white";
+starCtx.fill();
 });
 requestAnimationFrame(drawStars);
 }
 drawStars();
 
-/* ===============================
-   TYPING EFFECT
-================================ */
-const text="Bhavani, even in the darkest nights, my respect and love for you shine brighter than the moon above us.";
+/* Rose petals */
+for(let i=0;i<25;i++){
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌹";
+petal.style.left=Math.random()*100+"%";
+petal.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(petal);
+}
+
+/* Typing */
+const text="Bhavani, even under the darkest sky, my respect and love for you shine brighter than the stars.";
 let i=0;
 function typing(){
 if(i<text.length){
@@ -347,9 +359,7 @@ setTimeout(typing,50);
 }
 typing();
 
-/* ===============================
-   SCROLL REVEAL
-================================ */
+/* Scroll reveal */
 const sections=document.querySelectorAll("section");
 window.addEventListener("scroll",()=>{
 sections.forEach(sec=>{
@@ -359,22 +369,36 @@ sec.classList.add("show");
 });
 });
 
-/* ===============================
-   MODAL
-================================ */
+/* Modal */
 function openModal(){
 document.getElementById("proposalModal").style.display="flex";
 }
 function acceptLove(){
 document.getElementById("response").innerText="You Made Me The Happiest Person Alive!";
+startFireworks();
 }
 function needTime(){
 document.getElementById("response").innerText="I will wait. My love will never change.";
 }
 
-/* ===============================
-   SECRET LETTER
-================================ */
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function startFireworks(){
+for(let i=0;i<200;i++){
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height;
+ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+ctx.beginPath();
+ctx.arc(x,y,3,0,Math.PI*2);
+ctx.fill();
+}
+}
+
+/* Secret */
 function revealSecret(){
 document.getElementById("secret").style.display="block";
 }
