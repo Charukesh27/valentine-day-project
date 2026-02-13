@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhavani • forever mine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ffd9e6 0%, #fba6c9 40%, #c96eb0 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        /* floating hearts */
+        .heart-float {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .heart-float span {
+            position: absolute;
+            bottom: -20px;
+            color: rgba(255, 120, 160, 0.5);
+            font-size: 1.8rem;
+            animation: floatUp 10s linear infinite;
+            user-select: none;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* navbar */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 240, 245, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 12px 28px;
+            display: flex;
+            gap: 28px;
+            box-shadow: 0 15px 35px rgba(200, 0, 80, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 100;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .navbar a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #a1305c;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+            text-shadow: 0 0 4px #ffb6d9;
+            padding: 4px 8px;
+        }
+        .navbar a:hover {
+            color: #ff3377;
+            transform: scale(1.15) translateY(-3px);
+            text-shadow: 0 0 15px #ff99cc, 0 0 30px #ff3388;
+        }
+
+        /* main container */
+        .page-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+
+        /* sections */
+        .section {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 50px 20px 50px 20px;
+            padding: 40px 30px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 45px rgba(150, 20, 70, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: transform 0.4s ease, opacity 0.6s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s forwards;
+        }
+        .section:nth-child(even) { animation-delay: 0.15s; }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* headings */
+        h1, h2 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #ff1750, #a52a6d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 12px #ffb3d9, 0 0 25px #ff4d7a;
+            animation: glowPulse 2.5s infinite;
+        }
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 8px #ffb3d9, 0 0 18px #ff80b3; }
+            50% { text-shadow: 0 0 20px #ff99cc, 0 0 40px #ff3377; }
+            100% { text-shadow: 0 0 8px #ffb3d9, 0 0 18px #ff80b3; }
+        }
+        h2 { font-size: 2.3rem; }
+
+        /* typing effect */
+        .typewriter {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #3d0b2b;
+            min-height: 4rem;
+            border-right: 4px solid #ff4477;
+            display: inline-block;
+            padding-right: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 4s steps(40, end) forwards, blink 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: #ff4477; }
+        }
+
+        /* 3D button */
+        .btn-3d {
+            background: linear-gradient(145deg, #ff5982, #d43f73);
+            border: none;
+            padding: 16px 36px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            box-shadow: 0 15px 0 #831d46, 0 20px 30px rgba(180, 30, 70, 0.5);
+            cursor: pointer;
+            transition: 0.1s linear;
+            transform: translateY(0);
+            margin: 15px 5px;
+        }
+        .btn-3d:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 0 #831d46, 0 25px 35px #b3275b;
+        }
+        .btn-3d:active {
+            transform: translateY(10px);
+            box-shadow: 0 8px 0 #831d46, 0 15px 25px #b3275b;
+        }
+
+        /* 3D flip card */
+        .flip-card {
+            background: transparent;
+            width: 280px;
+            height: 200px;
+            perspective: 2000px;
+            margin: 20px auto;
+        }
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 30px;
+            box-shadow: 0 25px 35px -10px #801d48;
+        }
+        .flip-card:hover .flip-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 30px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(255, 210, 230, 0.95);
+            border: 2px solid white;
+        }
+        .flip-front {
+            background: #ffddea;
+            color: #ad2150;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .flip-back {
+            background: #fb6a9c;
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1.3rem;
+            font-style: italic;
+        }
+
+        /* heartbeat */
+        .heartbeat {
+            animation: heartbeat 1.3s ease-in-out infinite;
+            display: inline-block;
+            font-size: 3rem;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.2); }
+            55% { transform: scale(1); }
+        }
+
+        /* modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #ffe6f0;
+            padding: 40px;
+            border-radius: 80px 20px 80px 20px;
+            max-width: 500px;
+            text-align: center;
+            border: 5px solid #ff99bb;
+            box-shadow: 0 30px 50px #871f4b;
+        }
+        .modal-content h3 { font-size: 2.4rem; color: #b81b59; }
+        .modal-btns { display: flex; gap: 20px; justify-content: center; margin-top: 30px; }
+
+        /* fireworks canvas */
+        #fireworksCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            display: none;
+        }
+
+        /* responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .navbar { gap: 10px; padding: 10px 16px; }
+            .navbar a { font-size: 0.85rem; }
+        }
+
+        /* romantic pickups scattered */
+        .pickup-line {
+            background: rgba(255,255,240,0.7);
+            border-radius: 40px;
+            padding: 8px 25px;
+            display: inline-block;
+            margin: 6px;
+            font-size: 1.2rem;
+            color: #8d234b;
+            border: 1px solid white;
+        }
+
+        .promise-box {
+            background: #ffecf2;
+            border-radius: 50px;
+            padding: 35px;
+            font-size: 1.5rem;
+            color: #a52d63;
+            line-height: 2.2rem;
+            text-align: center;
+            border: 3px dashed #ff3377;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- floating hearts -->
+    <div class="heart-float" id="heartFloat"></div>
+
+    <!-- navbar -->
+    <nav class="navbar">
+        <a href="#home">🏡 Home</a>
+        <a href="#about">👸 About Her</a>
+        <a href="#promise">🤝 My Promise</a>
+        <a href="#proposal">💌 Proposal</a>
+        <a href="#memories">📸 Memories</a>
+        <a href="#forever">♾️ Forever</a>
+    </nav>
+
+    <!-- main pages as sections -->
+    <div class="page-container">
+        <!-- home -->
+        <section id="home" class="section">
+            <h1>💞 Bhavani, my universe 💞</h1>
+            <div class="typewriter">You are the reason my heart beats...</div>
+            <div style="margin: 40px 0 20px;">
+                <span class="pickup-line">❤️ If I had a rose for every time I think of you, I'd walk in a garden forever.</span>
+                <span class="pickup-line">🌹 Your name is honey on my lips.</span>
+            </div>
+            <div class="heartbeat">❤️‍🔥 BHAVANI ❤️‍🔥</div>
+        </section>
+
+        <!-- about her -->
+        <section id="about" class="section">
+            <h2>🌸 About the queen Bhavani 🌸</h2>
+            <div class="flip-card">
+                <div class="flip-inner">
+                    <div class="flip-front">✨ Her smile ✨</div>
+                    <div class="flip-back">lights up my entire galaxy 💫</div>
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;">
+                <span class="pickup-line">💕 She's poetry in motion.</span>
+                <span class="pickup-line">👑 born to be loved forever.</span>
+                <span class="pickup-line">🌺 Bhavani = grace itself.</span>
+            </div>
+        </section>
+
+        <!-- my promise -->
+        <section id="promise" class="section">
+            <h2>📜 My sacred promise 📜</h2>
+            <div class="promise-box">
+                "The Day of Promises – 11 February 2026<br>
+                Bhavani, I promise I will stand with you,<br>
+                Even if the whole world is against you,<br>
+                You don’t worry about anything,<br>
+                I will always be there for you, my dear." 💖
+            </div>
+            <div style="text-align:center; margin:30px 0 0;">
+                <span class="pickup-line">🤞 I'll catch you if you fall.</span>
+                <span class="pickup-line">⛅ my shoulder is always yours.</span>
+            </div>
+        </section>
+
+        <!-- proposal page (interactive) -->
+        <section id="proposal" class="section">
+            <h2>💍 Will you make me whole? 💍</h2>
+            <p style="font-size:1.8rem; color:#a02c5a;">Bhavani, you are not just my love…<br> You are my peace, my strength, my forever.</p>
+            <div style="font-size:2rem; margin:20px 0;">💗 🕊️ 💗</div>
+            <button class="btn-3d" id="proposeBtn">💝 Open my heart 💝</button>
+            <div style="margin:40px 0 20px;">
+                <span class="pickup-line">✨ If beauty were time, you'd be eternity.</span>
+                <span class="pickup-line">🌙 you're my dream I never want to wake from.</span>
+            </div>
+        </section>
+
+        <!-- memories -->
+        <section id="memories" class="section">
+            <h2>📷 Memories with Bhavani 📷</h2>
+            <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">🌅 sunset walks</div>
+                        <div class="flip-back">your hand in mine, eternity</div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-inner">
+                        <div class="flip-front">🎂 birthday laugh</div>
+                        <div class="flip-back">my favorite melody</div>
+                    </div>
+                </div>
+            </div>
+            <span class="pickup-line">📸 every moment with you is a treasure.</span>
+        </section>
+
+        <!-- forever page -->
+        <section id="forever" class="section">
+            <h2>∞ Forever us ∞</h2>
+            <div style="font-size:2.5rem; color:#a13362;">Bhavani, you are my forever.</div>
+            <div class="promise-box" style="background:#fbc1d7;">
+                "Even if the whole world is against you, I will stand with you. 
+                If your answer is No, I will wait for you patiently.
+                My love for you will never change."
+            </div>
+            <p style="font-size:2rem; margin-top:35px;">✨ 11.02.2026 ✨ the day love wins</p>
+        </section>
+    </div>
+
+    <!-- modal popup -->
+    <div id="loveModal" class="modal">
+        <div class="modal-content">
+            <h3>❤️ Bhavani, Will You Accept My Love? ❤️</h3>
+            <div class="modal-btns">
+                <button class="btn-3d" id="yesBtn" style="padding:12px 28px;">YES 💖</button>
+                <button class="btn-3d" id="needTimeBtn" style="padding:12px 28px;">I Need Time ⏳</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- fireworks canvas -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <!-- hidden audio autoplay -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMDUAAAAALYlMRlZBQUFBZ0VDSWpERSt2NENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0NDQXhFUUFBQUR3RENDQ0ND
